@@ -15,8 +15,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProductList, productCategory } from "../../services/api";
 import { updateProductList } from "../../redux/actions/productAction";
 import { updateCategoty } from "../../redux/actions/categoryAction";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -81,9 +83,9 @@ const Dashboard = () => {
           ))}
         </Select>
         <Button
-          variant="text"
+          variant="contained"
+          color="primary"
           onClick={() => navigate("/new-product")}
-          sx={{ padding: 0, textTransform: "none" }}
         >
           Add Product
         </Button>

@@ -27,14 +27,12 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const credentials = { username: "john_doe", password: "pass123" };
-
-      const response = await signInUser(credentials);
+      const response = await signInUser(data);
       console.log("response", response);
-      // if (response?.data?.status) {
-      //   localStorage.setItem("token", response.data.user.token);
-      //   navigate("/dashboard");s
-      // }
+      if (response?.data?.status) {
+        localStorage.setItem("token", response.data.user.token);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.log("errorerrorerrorerror", error);
       const errors = error?.response?.data?.errors;

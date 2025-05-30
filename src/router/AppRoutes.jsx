@@ -9,6 +9,7 @@ import DashboardPage from "../pages/Dashboard/index";
 import LoginPage from "../pages/Login/index";
 import Authentication from "../middlewares/Authentication";
 import RegisterPage from "../pages/Register";
+import CreateProductPage from "../pages/CreateProduct";
 
 const AppRoutes = () => {
   const isAuthenticated = useSelector(
@@ -25,6 +26,7 @@ const AppRoutes = () => {
           </>
         )}
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/new-product" element={<CreateProductPage />} />{" "}
         {/* <Route
           path="*"
           element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />}

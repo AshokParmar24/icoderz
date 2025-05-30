@@ -16,3 +16,8 @@ export const productCategory = (payload)=>{
     return axiosInstance.get("products/categories", payload);
 
 }
+
+
+export const createProductApi = (payload)=>{
+    return axiosInstance.post("products", payload);
+}
