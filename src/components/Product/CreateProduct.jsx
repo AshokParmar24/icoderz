@@ -10,6 +10,7 @@ import {
   MenuItem,
   Select,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -26,6 +27,7 @@ import ImageDropzone from "../ImageDropzone/ImageDropzone";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
@@ -127,8 +129,24 @@ const CreateProduct = () => {
         </Box>
       ) : (
         <Container maxWidth="sm">
-          <Box mt={5} sx={{ paddingBottom: "20px" }}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ paddingBottom: "20px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <Box sx={{ display: "flex", justifyContent: "start" }}>
+                <IconButton
+                  size="sm"
+                  color="#0000"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              </Box>
+
               <Typography variant="h4" gutterBottom>
                 {id ? "Edit Product" : "Create Product"}
               </Typography>

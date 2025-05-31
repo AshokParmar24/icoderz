@@ -13,8 +13,7 @@ const Layout = ({ children }) => {
           display: "flex",
           flexDirection: "column",
           height: "100vh",
-          overflow: "auto",
-        }}
+         }}
       >
         <Navbar />
         <Box sx={{ mt: 8, p: 6 }}>{children}</Box>
