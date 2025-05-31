@@ -17,7 +17,6 @@ const Layout = ({ children }) => {
         }}
       >
         <Navbar />
-        {/* Add padding to offset fixed AppBar */}
         <Box sx={{ mt: 8, p: 6 }}>{children}</Box>
       </Box>
     </Box>
