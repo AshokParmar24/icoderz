@@ -123,9 +123,9 @@ const Dashboard = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Box padding={6}>
+        <Box >
           <Typography variant="h3">Product List</Typography>
-          <Box mb={3} display="flex" gap={2}>
+          <Box mb={3} display="flex" flexWrap="wrap" gap={2}>
             <Select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
@@ -173,7 +173,7 @@ const Dashboard = () => {
                 <Grid
                   item
                   key={product.id}
-                  size={{ xs: 2, sm: 4, md: 4, lg: 3 }}
+                  size={{ xs: 12, sm: 4, md: 4, lg: 3 }}
                 >
                   <Box
                     onClick={() => console.log(product)}

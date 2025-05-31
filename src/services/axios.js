@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       const { status } = error.response;
       if (status === 401) {
-        // localStorage.clear();
+      // localStorage.removeItem("token");
         // window.location.href = "/";
       } else if (status === 500) {
         console.error("Server error.");

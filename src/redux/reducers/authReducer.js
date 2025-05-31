@@ -13,12 +13,14 @@ export default function authReducer(state = initialState, action) {
         token: action.payload,
         isAuthenticated: true,
       };
-    case REMOVE_TOKEN:
+    case REMOVE_TOKEN: {
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
         isAuthenticated: false,
       };
+    }
     default:
       return state;
   }
