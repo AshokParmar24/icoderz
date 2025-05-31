@@ -1,4 +1,11 @@
-//install depednecy all project package json
+# Project Title
+Product Management
+
+## Installation
+
+Install all dependencies using the following command:
+
+```bash
 npm install
 
 //project start
