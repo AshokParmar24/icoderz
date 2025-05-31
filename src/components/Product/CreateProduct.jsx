@@ -12,24 +12,32 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { createProductApi, productCategory } from "../../services/api";
+import {
+  createProductApi,
+  editProuctApi,
+  getSingalProductApi,
+  productCategory,
+} from "../../services/api";
 import { updateCategoty } from "../../redux/actions/categoryAction";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ImageDropzone from "../ImageDropzone/ImageDropzone";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
-  const navigate=useNavigate()
- 
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
     watch,
+    setValue,
   } = useForm();
 
   const { categoryList } = useSelector((state) => state?.categoryReducer);
@@ -47,25 +55,64 @@ const CreateProduct = () => {
     fetchProductcategoryList();
   }, []);
 
-  const onSubmit = async (data) => {
- 
+  const getSingalProductData = async () => {
     try {
-      const response = await createProductApi(data);
-       if (response?.status === 200) {
-        toast.success("product create successfully");
-        navigate("/dashboard")
-      }
+      const response = await getSingalProductApi(id);
+      console.log("responseresponseresponse", response);
+      setValue("category", response.data?.category);
+      setValue("title", response.data?.title);
+      setValue("price", response.data?.price);
+      setValue("image", response.data?.image);
+      setValue("description", response.data?.description);
     } catch (error) {
-      console.log("error", error);
+      console.log("error :>> ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getSingalProductData();
+    }
+  }, [id]);
+
+  const onSubmit = async (data) => {
+    if (id) {
+      const payload = {
+        id: id,
+        title: data?.title,
+        price: data?.price,
+        description: data?.description,
+        category: data?.category,
+        image: data?.image,
+      };
+      try {
+        const response = await editProuctApi(id, payload);
+        if (response?.status === 200) {
+          toast.success("product update successfully");
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    } else {
+      try {
+        const response = await createProductApi(data);
+        if (response?.status === 200) {
+          toast.success("product create successfully");
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   };
 
   return (
     <Container maxWidth="sm">
-      <Box mt={5}>
+      <Box mt={5} sx={{ paddingBottom: "20px" }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Typography variant="h4" gutterBottom>
-            Create Product
+            {id ? "Edit Product" : "Create Product"}
           </Typography>
         </Box>
         <Box
@@ -81,7 +128,7 @@ const CreateProduct = () => {
         >
           <TextField
             label="Title"
-            variant="filled"
+            variant="outlined"
             fullWidth
             {...register("title", { required: "Title is required" })}
             error={!!errors.title}
@@ -90,10 +137,10 @@ const CreateProduct = () => {
 
           <TextField
             label="Price"
-            variant="filled"
+            variant="outlined"
             fullWidth
             type="number"
-            inputProps={{ step: "1", min: "1" }}
+            inputProps={{ step: "0.01", min: "0" }}
             sx={{
               "& input[type=number]": {
                 MozAppearance: "textfield",
@@ -110,7 +157,7 @@ const CreateProduct = () => {
             {...register("price", {
               required: "Price is required",
               min: {
-                value: 1,
+                value: 0.01,
                 message: "Price must be greater than 0",
               },
               valueAsNumber: true,
@@ -120,7 +167,7 @@ const CreateProduct = () => {
           />
           <TextField
             label="Description"
-            variant="filled"
+            variant="outlined"
             fullWidth
             multiline
             rows={4}
@@ -136,7 +183,7 @@ const CreateProduct = () => {
           />
           <FormControl
             fullWidth
-            variant="filled"
+            variant="outlined"
             error={!!errors.category}
             margin="normal"
           >
@@ -145,6 +192,7 @@ const CreateProduct = () => {
               name="category"
               control={control}
               rules={{ required: "Category is required" }}
+              defaultValue=""
               render={({ field }) => (
                 <Select labelId="category-label" label="Category" {...field}>
                   <MenuItem value="">
@@ -175,7 +223,7 @@ const CreateProduct = () => {
           />
 
           <Button type="submit" fullWidth variant="contained" color="primary">
-            Submit
+            {id ? "Save" : "Submit"}
           </Button>
         </Box>
       </Box>

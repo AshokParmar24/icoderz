@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
   Button,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +17,8 @@ import { getProductList, productCategory } from "../../services/api";
 import { updateProductList } from "../../redux/actions/productAction";
 import { updateCategoty } from "../../redux/actions/categoryAction";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -57,6 +60,8 @@ const Dashboard = () => {
       sortOrder === "asc" ? a.price - b.price : b.price - a.price
     );
 
+  const handleDelete = (id) => {};
+
   return (
     <Box padding={6}>
       <Typography variant="h3">Product List</Typography>
@@ -90,9 +95,9 @@ const Dashboard = () => {
           Add Product
         </Button>
       </Box>
-      <Grid container spacing={4} columns={{ xs: 3, sm: 8, md: 12 }}>
+      <Grid container spacing={4} columns={{ xs: 3, sm: 8, md: 12, lg: 12 }}>
         {sortedProducts.map((product) => (
-          <Grid item key={product.id} size={{ xs: 2, sm: 4, md: 3 }}>
+          <Grid item key={product.id} size={{ xs: 2, sm: 4, md: 4, lg: 3 }}>
             <Box
               onClick={() => console.log(product)}
               sx={{ cursor: "pointer" }}
@@ -105,7 +110,32 @@ const Dashboard = () => {
                   alt={product.title}
                 />
                 <CardContent>
-                  <Typography variant="h6">{product.title}</Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                      {product.title}
+                    </Typography>
+                    <Box sx={{ display: "flex", gap: "5px" }}>
+                      <IconButton
+                        size="small"
+                        color="primary"
+                        onClick={() => navigate(`/edit-product/${product.id}`)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        color="error"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  </Box>
+
                   <Tooltip title={product.description}>
                     <Typography
                       variant="body2"
@@ -124,6 +154,10 @@ const Dashboard = () => {
                     ${product.price}
                   </Typography>
                   <Typography variant="body2">{product.category}</Typography>
+                  <Typography variant="body2">
+                    ⭐ Rating: {product?.rating?.rate ?? "N/A"} (
+                    {product?.rating?.count ?? 0} reviews)
+                  </Typography>
                 </CardContent>
               </Card>
             </Box>

@@ -27,6 +27,7 @@ const AppRoutes = () => {
         )}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/new-product" element={<CreateProductPage />} />{" "}
+        <Route path="/edit-product/:id" element={<CreateProductPage />} />{" "}
         {/* <Route
           path="*"
           element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />}

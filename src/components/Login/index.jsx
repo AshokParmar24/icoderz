@@ -69,7 +69,7 @@ const Login = () => {
       >
         <TextField
           label="Username"
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("username", { required: "Username is required" })}
           error={!!errors.username}
@@ -79,7 +79,7 @@ const Login = () => {
         <TextField
           label="Password"
           type={showPassword ? "text" : "password"}
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("password", { required: "Password is required" })}
           error={!!errors.password}

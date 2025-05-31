@@ -75,7 +75,7 @@ const Register = () => {
 
         <TextField
           label="Username"
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("username", { required: "Username is required" })}
           error={!!errors.username}
@@ -84,7 +84,7 @@ const Register = () => {
 
         <TextField
           label="Email"
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("email", { required: "Email is required" })}
           error={!!errors.email}
@@ -93,7 +93,7 @@ const Register = () => {
         <TextField
           label="Password"
           type={showPassword ? "text" : "password"}
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("password", { required: "Password is required" })}
           error={!!errors.password}
@@ -112,7 +112,7 @@ const Register = () => {
         <TextField
           label="Confirm Password"
           type={showConfirmPassword ? "text" : "password"}
-          variant="filled"
+         variant="outlined"
           fullWidth
           {...register("confirmPassword", {
             required: "Confirm Password is required",
