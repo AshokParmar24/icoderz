@@ -41,6 +41,7 @@ const Dashboard = () => {
   const { categoryList } = useSelector((state) => state?.categoryReducer);
   const [loading, setLoading] = useState(false);
   const [sortTitle, setSortTiltle] = useState("asc");
+  const [currentFilter, setCurrentFilter] = useState("title");
 
   const dispatch = useDispatch();
 
@@ -76,7 +77,7 @@ const Dashboard = () => {
   const sortedProducts = productList
     .filter((p) => !selectedCategory || p.category === selectedCategory)
     .sort((a, b) => {
-      if (sortTitle) {
+      if (sortTitle && currentFilter === "title") {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
         if (titleA < titleB) return sortTitle === "asc" ? -1 : 1;
@@ -123,12 +124,15 @@ const Dashboard = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Box >
+        <Box>
           <Typography variant="h3">Product List</Typography>
           <Box mb={3} display="flex" flexWrap="wrap" gap={2}>
             <Select
               value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
+              onChange={(e) => {
+                setSortOrder(e.target.value);
+                setCurrentFilter("price");
+              }}
               displayEmpty
             >
               <MenuItem value="asc">Price: Low to High</MenuItem>
@@ -149,7 +153,10 @@ const Dashboard = () => {
             </Select>
             <Select
               value={sortTitle}
-              onChange={(e) => setSortTiltle(e.target.value)}
+              onChange={(e) => {
+                setCurrentFilter("title");
+                setSortTiltle(e.target.value);
+              }}
               displayEmpty
             >
               <MenuItem value="asc">Title: A to Z</MenuItem>
