@@ -18,13 +18,18 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route element={<Authentication />}></Route>
+        <Route element={<Authentication />}>
+          {/* <Route path="/dashboard" element={<DashboardPage />} /> api working login that time uncomment 
+          <Route path="/new-product" element={<CreateProductPage />} />{" "}
+          <Route path="/edit-product/:id" element={<CreateProductPage />} />{" "} */}
+        </Route>
         {!isAuthenticated && (
           <>
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </>
         )}
+        {/* not working that time  */}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/new-product" element={<CreateProductPage />} />{" "}
         <Route path="/edit-product/:id" element={<CreateProductPage />} />{" "}

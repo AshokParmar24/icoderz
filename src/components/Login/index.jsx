@@ -12,6 +12,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signInUser } from "../../services/api";
+import { useDispatch } from "react-redux";
+import { storeToken } from "../../redux/actions/authAction";
 
 const Login = () => {
   const {
@@ -19,6 +21,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const dispatch=useDispatch()
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +31,9 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await signInUser(data);
-      console.log("response", response);
-      if (response?.data?.status) {
+       if (response?.data?.status) {
         localStorage.setItem("token", response.data.user.token);
+        dispatch(storeToken(response.data.user.token))
         navigate("/dashboard");
       }
     } catch (error) {
